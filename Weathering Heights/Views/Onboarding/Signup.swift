@@ -19,6 +19,8 @@ struct SignUp: View {
     
     @State private var askOTP: Bool = false
     @State private var otpText: String = ""
+    
+    @AppStorage("isUserLoggedIn") private var isUserLoggedIn: Bool = false
    
     var body: some View {
         Text("Tell us more about yourself")
@@ -92,11 +94,15 @@ struct SignUp: View {
         .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $askOTP, content: {
             if #available(iOS 16.4, *) {
-                OTPView(otpText: $otpText)
+                OTPView(otpText: $otpText, onVerify: {
+                    isUserLoggedIn = true
+                })
                     .presentationDetents([.height(350)])
                     .presentationCornerRadius(30)
             } else {
-                OTPView(otpText: $otpText)
+                OTPView(otpText: $otpText, onVerify: {
+                     isUserLoggedIn = true
+                })
                     .presentationDetents([.height(350)])
             }
         })

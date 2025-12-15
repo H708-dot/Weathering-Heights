@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct Weathering_HeightsApp: App {
+    @AppStorage("isUserLoggedIn") private var isUserLoggedIn: Bool = false
+    
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            if isUserLoggedIn {
+                HomeView()
+            } else {
+                WelcomeView()
+            }
         }
     }
 }

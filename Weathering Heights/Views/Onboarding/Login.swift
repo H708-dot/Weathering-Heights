@@ -17,6 +17,8 @@ struct Login: View {
     
     @State var emailIdIsValid: Bool = true
     
+    @AppStorage("isUserLoggedIn") private var isUserLoggedIn: Bool = false
+    
     var body: some View {
         ZStack {
             Image("Background")
@@ -70,7 +72,10 @@ struct Login: View {
                     .hSpacing(.trailing)
                     
                     /// Login Button
-                    GradientButton(title: "Login", icon: "arrow.right") {}
+                    GradientButton(title: "Login", icon: "arrow.right") {
+                        // TODO: Implement actual auth logic here
+                        isUserLoggedIn = true
+                    }
                         .hSpacing(.trailing)
                         /// Disabling Until the Data is Entered
                         .disableWithOpacity(emailId.isEmpty || password.isEmpty)
