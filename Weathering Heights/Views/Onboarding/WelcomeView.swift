@@ -30,13 +30,23 @@ struct WelcomeView: View {
                     TabView(selection: $currentStep) {
                         ForEach(0..<onboardingSteps.count, id: \.self) { index in
                             VStack(spacing: 25) {
+                            VStack(spacing: 25) {
                                 // Icon with float animation
-                                Image(systemName: onboardingSteps[index].image)
-                                    .font(.system(size: 100))
-                                    .foregroundStyle(.white)
-                                    .symbolEffect(.bounce, value: index) // iOS 17 animation or fallback
-                                    .shadow(color: .white.opacity(0.5), radius: 20)
-                                    .padding(.bottom, 30)
+                                if onboardingSteps[index].isSystemImage {
+                                    Image(systemName: onboardingSteps[index].image)
+                                        .font(.system(size: 100))
+                                        .foregroundStyle(.white)
+                                        .symbolEffect(.bounce, value: index)
+                                        .shadow(color: .white.opacity(0.5), radius: 20)
+                                        .padding(.bottom, 30)
+                                } else {
+                                    Image(onboardingSteps[index].image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 100)
+                                        .shadow(color: .white.opacity(0.5), radius: 20)
+                                        .padding(.bottom, 30)
+                                }
                                 
                                 // Glass Card
                                 VStack(spacing: 15) {
