@@ -30,7 +30,6 @@ struct WelcomeView: View {
                     TabView(selection: $currentStep) {
                         ForEach(0..<onboardingSteps.count, id: \.self) { index in
                             VStack(spacing: 25) {
-                            VStack(spacing: 25) {
                                 // Icon with float animation
                                 if onboardingSteps[index].isSystemImage {
                                     Image(systemName: onboardingSteps[index].image)
