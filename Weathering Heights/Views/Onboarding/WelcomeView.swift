@@ -26,59 +26,50 @@ struct WelcomeView: View {
                     }
                 
                 // Content
-                // Content
                 GeometryReader { geometry in
+                    let isLandscape = geometry.size.width > geometry.size.height
+                    
                     VStack {
-                        // Dynamically adjust spacer based on orientation/height
-                        Spacer(minLength: 0)
+                        // Dynamically adjust spacer based on orientation
+                        if !isLandscape {
+                            Spacer(minLength: 0)
+                        }
                         
                         TabView(selection: $currentStep) {
                             ForEach(0..<onboardingSteps.count, id: \.self) { index in
-                                VStack(spacing: 25) {
-                                    // Icon with float animation
-                                    if onboardingSteps[index].isSystemImage {
-                                        Image(systemName: onboardingSteps[index].image)
-                                            .font(.system(size: 100))
-                                            .foregroundStyle(.white)
-                                            .symbolEffect(.bounce, value: index)
-                                            .shadow(color: .white.opacity(0.5), radius: 20)
-                                            .padding(.bottom, 30)
+                                Group {
+                                    if isLandscape {
+                                        // Landscape: Side-by-Side
+                                        HStack(spacing: 30) {
+                                            // Left: Image
+                                            elementImage(index: index)
+                                                .frame(maxWidth: geometry.size.width * 0.4)
+                                            
+                                            // Right: Text Card
+                                            ScrollView {
+                                                elementCard(index: index)
+                                                    .padding(.vertical)
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                        }
+                                        .padding(.horizontal, 40)
                                     } else {
-                                        Image(onboardingSteps[index].image)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 100)
-                                            .shadow(color: .white.opacity(0.5), radius: 20)
-                                            .padding(.bottom, 30)
+                                        // Portrait: Stacked
+                                        VStack(spacing: 25) {
+                                            elementImage(index: index)
+                                            elementCard(index: index)
+                                                .padding(.horizontal, 20)
+                                        }
                                     }
-                                    
-                                    // Glass Card
-                                    VStack(spacing: 15) {
-                                        Text(onboardingSteps[index].title)
-                                            .font(.custom("Rubik-Bold", size: 32))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundStyle(.white)
-                                        
-                                        Text(onboardingSteps[index].description)
-                                            .font(.custom("Rubik-Regular", size: 18))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundStyle(.white.opacity(0.9))
-                                            .padding(.horizontal, 10)
-                                    }
-                                    .padding(30)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 30)
-                                            .fill(.ultraThinMaterial)
-                                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
-                                    )
-                                    .padding(.horizontal, 20)
                                 }
                                 .tag(index)
                             }
                         }
                         .tabViewStyle(.page(indexDisplayMode: .always))
+                        // Hide default index view in landscape if it overlaps, or keep it.
+                        // For now keeping it, but the frame needs to be flexible.
                         .indexViewStyle(.page(backgroundDisplayMode: .always))
-                        .frame(height: 500)
+                        .frame(height: isLandscape ? nil : 500) // Flexible in landscape
                         
                         // Button Logic
                         Button {
@@ -112,13 +103,55 @@ struct WelcomeView: View {
                             }
                         }
                         .padding(.horizontal, 40)
-                        .padding(.bottom, 50)
+                        .padding(.bottom, isLandscape ? 20 : 50)
                     }
-                    // Scale down if the screen height is less than optimal (approx 700pts needed for full comfortably)
-                    // This ensures "nothing overlaps" by shrinking the UI to fit
-                    .scaleEffect(geometry.size.height < 700 ? max(geometry.size.height / 700, 0.7) : 1)
                     .frame(width: geometry.size.width, height: geometry.size.height)
                 }
+            }
+        }
+    }
+    
+    // Helper Views for nicer code structure
+    @ViewBuilder
+    func elementImage(index: Int) -> some View {
+        if onboardingSteps[index].isSystemImage {
+            Image(systemName: onboardingSteps[index].image)
+                .font(.system(size: 100))
+                .foregroundStyle(.white)
+                .symbolEffect(.bounce, value: index)
+                .shadow(color: .white.opacity(0.5), radius: 20)
+                .padding(.bottom, 30)
+        } else {
+            Image(onboardingSteps[index].image)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 100)
+                .shadow(color: .white.opacity(0.5), radius: 20)
+                .padding(.bottom, 30)
+        }
+    }
+    
+    @ViewBuilder
+    func elementCard(index: Int) -> some View {
+        VStack(spacing: 15) {
+            Text(onboardingSteps[index].title)
+                .font(.custom("Rubik-Bold", size: 32))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.white)
+            
+            Text(onboardingSteps[index].description)
+                .font(.custom("Rubik-Regular", size: 18))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.white.opacity(0.9))
+                .padding(.horizontal, 10)
+        }
+        .padding(30)
+        .background(
+            RoundedRectangle(cornerRadius: 30)
+                .fill(.ultraThinMaterial)
+                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+    }
             }
         }
     }
