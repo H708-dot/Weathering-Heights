@@ -27,6 +27,8 @@ struct WelcomeView: View {
                 
                 // Content
                 VStack {
+                    Spacer()
+                    
                     TabView(selection: $currentStep) {
                         ForEach(0..<onboardingSteps.count, id: \.self) { index in
                             VStack(spacing: 25) {
@@ -74,8 +76,6 @@ struct WelcomeView: View {
                     .tabViewStyle(.page(indexDisplayMode: .always))
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
                     .frame(height: 500)
-                    
-                    Spacer()
                     
                     // Button Logic
                     Button {
