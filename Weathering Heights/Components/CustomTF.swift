@@ -20,7 +20,8 @@ struct CustomTF: View {
         Rectangle()
             .fill(.white)
             .cornerRadius(8)
-            .frame(width: 350, height: 45)
+            .frame(maxWidth: .infinity)
+            .frame(height: 45)
             .overlay {
                 HStack(alignment: .top, content: {
                     Image(systemName: sfIcon)
