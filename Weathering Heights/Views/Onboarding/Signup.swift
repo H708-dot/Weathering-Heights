@@ -59,6 +59,8 @@ struct SignUp: View {
             .hSpacing(.trailing)
             /// Disabling Until the Data is Entered
             .disableWithOpacity(emailId.isEmpty || password.isEmpty || fullName.isEmpty || ConfirmPassword.isEmpty || password != ConfirmPassword || !emailIdIsValid)
+            
+            SocialLoginRow()
         }
         .frame(width: 350)
         .padding(.top, 20)

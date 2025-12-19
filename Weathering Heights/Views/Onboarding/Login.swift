@@ -53,6 +53,8 @@ struct Login: View {
             .hSpacing(.trailing)
             /// Disabling Until the Data is Entered
             .disableWithOpacity(emailId.isEmpty || password.isEmpty)
+            
+            SocialLoginRow()
         }
         .frame(width: 350) // Ensure entire form aligns to the field width
         .padding(.top, 20)
