@@ -54,7 +54,11 @@ struct Login: View {
             /// Disabling Until the Data is Entered
             .disableWithOpacity(emailId.isEmpty || password.isEmpty)
             
-            SocialLoginRow()
+            SocialLoginRow(
+                onGoogle: { isUserLoggedIn = true },
+                onApple: { isUserLoggedIn = true },
+                onMicrosoft: { isUserLoggedIn = true }
+            )
         }
         .frame(width: 350) // Ensure entire form aligns to the field width
         .padding(.top, 20)

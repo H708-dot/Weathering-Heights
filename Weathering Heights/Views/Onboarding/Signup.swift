@@ -60,7 +60,11 @@ struct SignUp: View {
             /// Disabling Until the Data is Entered
             .disableWithOpacity(emailId.isEmpty || password.isEmpty || fullName.isEmpty || ConfirmPassword.isEmpty || password != ConfirmPassword || !emailIdIsValid)
             
-            SocialLoginRow()
+            SocialLoginRow(
+                onGoogle: { isUserLoggedIn = true },
+                onApple: { isUserLoggedIn = true },
+                onMicrosoft: { isUserLoggedIn = true }
+            )
         }
         .frame(width: 350)
         .padding(.top, 20)
