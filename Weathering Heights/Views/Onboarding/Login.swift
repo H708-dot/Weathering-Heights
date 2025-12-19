@@ -50,9 +50,11 @@ struct Login: View {
                 // TODO: Implement actual auth logic here
                 isUserLoggedIn = true
             }
-                /// Disabling Until the Data is Entered
-                .disableWithOpacity(emailId.isEmpty || password.isEmpty)
+            .hSpacing(.trailing)
+            /// Disabling Until the Data is Entered
+            .disableWithOpacity(emailId.isEmpty || password.isEmpty)
         }
+        .frame(width: 350) // Ensure entire form aligns to the field width
         .padding(.top, 20)
         .sheet(isPresented: $showForgetPasswordView, content: {
             if #available(iOS 16.4, *) {

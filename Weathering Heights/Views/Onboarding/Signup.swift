@@ -56,9 +56,11 @@ struct SignUp: View {
                 askOTP.toggle()
             }
             .foregroundColor(.white)
+            .hSpacing(.trailing)
             /// Disabling Until the Data is Entered
             .disableWithOpacity(emailId.isEmpty || password.isEmpty || fullName.isEmpty || ConfirmPassword.isEmpty || password != ConfirmPassword || !emailIdIsValid)
         }
+        .frame(width: 350)
         .padding(.top, 20)
         .sheet(isPresented: $askOTP, content: {
             if #available(iOS 16.4, *) {

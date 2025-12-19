@@ -21,7 +21,7 @@ struct GradientButton: View {
             .fontWeight(.bold)
             .foregroundStyle(.white)
             .padding(.vertical, 12)
-            .frame(maxWidth: .infinity) // Make button fill available width
+            .padding(.horizontal, 35)
             .background(.linearGradient(colors: [Color(UIColor(red: 7/255, green: 71/255, blue: 37/255, alpha: 1)), Color(UIColor(red: 6/255, green: 60/255, blue: 29/255, alpha: 1)), Color(UIColor(red: 6/255, green: 48/255, blue: 24/255, alpha: 1))], startPoint: .top, endPoint: .bottom), in: .capsule)
         })
     }
