@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3805A0A02C3BCC5100A56BBF /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3805A09F2C3BCC5100A56BBF /* Profile.swift */; };
+		385EC3A32EF5B4DD0046E2D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 385EC3A22EF5B4DC0046E2D5 /* GoogleService-Info.plist */; };
 		38C070D82C37021700891AD2 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C070D72C37021700891AD2 /* ForgotPassword.swift */; };
 		38D18B042EF0A091000B8691 /* OnboardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D18B032EF0A091000B8691 /* OnboardingStep.swift */; };
 		38D18B082EF0A0F5000B8691 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D18B072EF0A0F5000B8691 /* HomeView.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		3805A09F2C3BCC5100A56BBF /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		385EC3A22EF5B4DC0046E2D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38C070D72C37021700891AD2 /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		38D18B032EF0A091000B8691 /* OnboardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep.swift; sourceTree = "<group>"; };
 		38D18B072EF0A0F5000B8691 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		5EC50A402C306620006C137C /* Weathering Heights */ = {
 			isa = PBXGroup;
 			children = (
+				385EC3A22EF5B4DC0046E2D5 /* GoogleService-Info.plist */,
 				5EC50A412C306620006C137C /* Weathering_HeightsApp.swift */,
 				5E253EEE2C401D380079865B /* Views */,
 				5E58D17D2C3DA9750046C99A /* Components */,
@@ -380,6 +383,7 @@
 				5E2662862C3C728400E9A389 /* Rubik-Medium.ttf in Resources */,
 				5E2662902C3C728400E9A389 /* Rubik-ExtraBoldItalic.ttf in Resources */,
 				5E2662872C3C728400E9A389 /* Rubik-BlackItalic.ttf in Resources */,
+				385EC3A32EF5B4DD0046E2D5 /* GoogleService-Info.plist in Resources */,
 				5E26628A2C3C728400E9A389 /* Rubik-SemiBoldItalic.ttf in Resources */,
 				5E26628B2C3C728400E9A389 /* Rubik-SemiBold.ttf in Resources */,
 				5E2662852C3C728400E9A389 /* Rubik-Regular.ttf in Resources */,
