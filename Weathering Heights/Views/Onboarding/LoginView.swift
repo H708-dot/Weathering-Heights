@@ -22,47 +22,63 @@ struct LoginView: View {
                     let isLandscape = geometry.size.width > geometry.size.height
                     
                     if isLandscape {
-                        // Landscape: Side-by-Side
-                        HStack(spacing: 0) {
-                            // Left Side: Branding & Toggle
-                            VStack {
-                                Spacer()
-                                Text("Weathering Heights")
-                                    .font(.custom("Rubik-Bold", size: 30))
-                                    .foregroundStyle(.white)
-                                    .multilineTextAlignment(.center)
-                                
-                                Text(isLogin ? "Welcome Back" : "Join Us")
-                                    .font(.custom("Rubik-Regular", size: 18))
-                                    .foregroundStyle(.white.opacity(0.8))
-                                
-                                Spacer()
-                                
-                                // Toggle
-                                segmentedControl
-                                    .frame(width: 250)
-                                Spacer()
-                            }
-                            .frame(width: geometry.size.width * 0.4)
-                            .background(.ultraThinMaterial.opacity(0.3))
-                            
-                            // Right Side: Form
-                            ScrollView {
-                                VStack {
-                                    Spacer(minLength: 50)
-                                    if isLogin {
-                                        Login(showLogin: $showLogin)
-                                            .transition(.move(edge: .trailing))
-                                    } else {
-                                        SignUp(showLogin: $showLogin)
-                                            .transition(.move(edge: .leading))
-                                    }
-                                    Spacer(minLength: 50)
+                        // Landscape: Unified Glass Modal
+                        ZStack {
+                            HStack(spacing: 0) {
+                                // Left Panel: Branding
+                                VStack(spacing: 15) {
+                                    Spacer()
+                                    Image(systemName: "cloud.sun.fill") // Placeholder Icon or App Icon
+                                        .font(.system(size: 60))
+                                        .foregroundStyle(.white)
+                                        .symbolRenderingMode(.hierarchical)
+                                    
+                                    Text("Weathering Heights")
+                                        .font(.custom("Rubik-Bold", size: 28))
+                                        .foregroundStyle(.white)
+                                        .multilineTextAlignment(.center)
+                                    
+                                    Text(isLogin ? "Welcome Back" : "Join our Community")
+                                        .font(.custom("Rubik-Regular", size: 16))
+                                        .foregroundStyle(.white.opacity(0.8))
+                                        .multilineTextAlignment(.center)
+                                        .padding(.bottom, 20)
+                                    
+                                    Spacer()
                                 }
-                                .padding(.horizontal, 40)
+                                .frame(width: geometry.size.width * 0.4)
+                                .background(Color.black.opacity(0.1)) // Subtle tint to distinguish brand panel
+                                
+                                // Right Panel: Interactive Form
+                                VStack(spacing: 0) {
+                                    // Toggle at top of Right Panel
+                                    segmentedControl
+                                        .padding(.top, 25)
+                                        .padding(.horizontal, 30)
+                                        .padding(.bottom, 15)
+                                    
+                                    ScrollView(showsIndicators: false) {
+                                        VStack {
+                                            if isLogin {
+                                                Login(showLogin: $showLogin)
+                                                    .transition(.move(edge: .trailing))
+                                            } else {
+                                                SignUp(showLogin: $showLogin)
+                                                    .transition(.move(edge: .leading))
+                                            }
+                                        }
+                                        .padding(.horizontal, 30)
+                                        .padding(.bottom, 25)
+                                    }
+                                }
+                                .frame(width: geometry.size.width * 0.5) // Adjust width to fit nicely
                             }
-                            .frame(width: geometry.size.width * 0.6)
                         }
+                        .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.85) // Modal Size
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(30)
+                        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
+                        .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                     } else {
                         // Portrait: Stacked
                         VStack {

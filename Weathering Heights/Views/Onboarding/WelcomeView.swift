@@ -30,7 +30,6 @@ struct WelcomeView: View {
                     let isLandscape = geometry.size.width > geometry.size.height
                     
                     VStack {
-                        // Dynamically adjust spacer based on orientation
                         if !isLandscape {
                             Spacer(minLength: 0)
                         }
@@ -39,25 +38,48 @@ struct WelcomeView: View {
                             ForEach(0..<onboardingSteps.count, id: \.self) { index in
                                 Group {
                                     if isLandscape {
-                                        // Landscape: Side-by-Side
-                                        HStack(spacing: 30) {
-                                            // Left: Image
-                                            elementImage(index: index)
-                                                .frame(maxWidth: geometry.size.width * 0.4)
-                                            
-                                            // Right: Text Card
-                                            ScrollView {
-                                                elementCard(index: index)
-                                                    .padding(.vertical)
+                                        // Landscape: Unified Glass Card
+                                        HStack(spacing: 0) {
+                                            // Left Panel: Image
+                                            ZStack {
+                                                elementImage(index: index)
+                                                    .padding(20)
                                             }
-                                            .frame(maxWidth: .infinity)
+                                            .frame(width: geometry.size.width * 0.45, height: geometry.size.height * 0.75) // Fixed proportion
+                                            .background(Color.white.opacity(0.1)) // Subtle separation
+                                            
+                                            // Right Panel: Text + Button
+                                            VStack(spacing: 20) {
+                                                Spacer()
+                                                
+                                                Text(onboardingSteps[index].title)
+                                                    .font(.custom("Rubik-Bold", size: 30))
+                                                    .multilineTextAlignment(.leading)
+                                                    .foregroundStyle(.white)
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                
+                                                Text(onboardingSteps[index].description)
+                                                    .font(.custom("Rubik-Regular", size: 16))
+                                                    .multilineTextAlignment(.leading)
+                                                    .foregroundStyle(.white.opacity(0.9))
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                
+                                                Spacer()
+                                                
+                                                // Button Inside Card
+                                                actionButton(index: index)
+                                            }
+                                            .padding(30)
+                                            .frame(width: geometry.size.width * 0.45, height: geometry.size.height * 0.75)
                                         }
-                                        .padding(.horizontal, 40)
+                                        .background(.ultraThinMaterial)
+                                        .cornerRadius(30)
+                                        .shadow(color: .black.opacity(0.15), radius: 15, x: 0, y: 10)
                                     } else {
                                         // Portrait: Stacked
                                         VStack(spacing: 25) {
                                             elementImage(index: index)
-                                            elementCard(index: index)
+                                            elementCardPortrait(index: index)
                                                 .padding(.horizontal, 20)
                                         }
                                     }
@@ -66,44 +88,15 @@ struct WelcomeView: View {
                             }
                         }
                         .tabViewStyle(.page(indexDisplayMode: .always))
-                        // Hide default index view in landscape if it overlaps, or keep it.
-                        // For now keeping it, but the frame needs to be flexible.
                         .indexViewStyle(.page(backgroundDisplayMode: .always))
-                        .frame(height: isLandscape ? nil : 500) // Flexible in landscape
+                        .frame(height: isLandscape ? nil : 500)
                         
-                        // Button Logic
-                        Button {
-                            withAnimation {
-                                if currentStep < onboardingSteps.count - 1 {
-                                    currentStep += 1
-                                }
-                            }
-                        } label: {
-                            if currentStep == onboardingSteps.count - 1 {
-                                 NavigationLink(destination: LoginView().navigationBarBackButtonHidden(true)) {
-                                     Text("Get Started")
-                                        .font(.custom("Rubik-Bold", size: 20))
-                                        .frame(maxWidth: .infinity)
-                                        .padding()
-                                        .background(
-                                            LinearGradient(colors: [Color(UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)), Color(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1))], startPoint: .top, endPoint: .bottom)
-                                        )
-                                        .foregroundStyle(.black)
-                                        .cornerRadius(40)
-                                        .shadow(color: .white.opacity(0.3), radius: 10)
-                                 }
-                            } else {
-                                Text("Next")
-                                    .font(.custom("Rubik-Bold", size: 20))
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(.ultraThinMaterial)
-                                    .foregroundStyle(.white)
-                                    .cornerRadius(40)
-                            }
+                        // Portrait Button (Outside TabView)
+                        if !isLandscape {
+                            actionButton(index: currentStep)
+                                .padding(.horizontal, 40)
+                                .padding(.bottom, 50)
                         }
-                        .padding(.horizontal, 40)
-                        .padding(.bottom, isLandscape ? 20 : 50)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
                 }
@@ -111,28 +104,26 @@ struct WelcomeView: View {
         }
     }
     
-    // Helper Views for nicer code structure
+    // Helper Views
     @ViewBuilder
     func elementImage(index: Int) -> some View {
         if onboardingSteps[index].isSystemImage {
             Image(systemName: onboardingSteps[index].image)
-                .font(.system(size: 100))
+                .font(.system(size: 80))
                 .foregroundStyle(.white)
                 .symbolEffect(.bounce, value: index)
                 .shadow(color: .white.opacity(0.5), radius: 20)
-                .padding(.bottom, 30)
         } else {
             Image(onboardingSteps[index].image)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 100)
+                .frame(height: 80)
                 .shadow(color: .white.opacity(0.5), radius: 20)
-                .padding(.bottom, 30)
         }
     }
     
     @ViewBuilder
-    func elementCard(index: Int) -> some View {
+    func elementCardPortrait(index: Int) -> some View {
         VStack(spacing: 15) {
             Text(onboardingSteps[index].title)
                 .font(.custom("Rubik-Bold", size: 32))
@@ -151,6 +142,44 @@ struct WelcomeView: View {
                 .fill(.ultraThinMaterial)
                 .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
         )
+    }
+    
+    @ViewBuilder
+    func actionButton(index: Int) -> some View {
+        Button {
+            withAnimation {
+                if currentStep < onboardingSteps.count - 1 {
+                    currentStep += 1
+                }
+            }
+        } label: {
+            if index == onboardingSteps.count - 1 {
+                 NavigationLink(destination: LoginView().navigationBarBackButtonHidden(true)) {
+                     Text("Get Started")
+                        .font(.custom("Rubik-Bold", size: 20))
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            LinearGradient(colors: [Color(UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)), Color(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1))], startPoint: .top, endPoint: .bottom)
+                        )
+                        .foregroundStyle(.black)
+                        .cornerRadius(40)
+                        .shadow(color: .white.opacity(0.3), radius: 10)
+                 }
+            } else {
+                Text("Next")
+                    .font(.custom("Rubik-Bold", size: 20))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(.ultraThinMaterial) // In portrait this blends, in landscape it blends. Good.
+                    .foregroundStyle(.white)
+                    .cornerRadius(40)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 40)
+                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                    )
+            }
+        }
     }
             }
         }
