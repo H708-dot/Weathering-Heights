@@ -47,6 +47,7 @@ struct SocialLoginRow: View {
                 Text("Or continue with")
                     .font(.custom("Rubik-Regular", size: 14))
                     .foregroundStyle(.gray.opacity(0.8))
+                    .fixedSize(horizontal: true, vertical: false)
                 
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))

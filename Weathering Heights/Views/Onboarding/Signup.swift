@@ -53,7 +53,12 @@ struct SignUp: View {
             
             /// SignUp Button
             GradientButton(title: "Continue", icon: "arrow.right") {
-                askOTP.toggle()
+                Task {
+                    // Try to sign up directly via Firebase
+                    if await AuthManager.shared.signUp(email: emailId, password: password) {
+                        isUserLoggedIn = true
+                    }
+                }
             }
             .foregroundColor(.white)
             .hSpacing(.trailing)
@@ -61,9 +66,23 @@ struct SignUp: View {
             .disableWithOpacity(emailId.isEmpty || password.isEmpty || fullName.isEmpty || ConfirmPassword.isEmpty || password != ConfirmPassword || !emailIdIsValid)
             
             SocialLoginRow(
-                onGoogle: { isUserLoggedIn = true },
-                onApple: { isUserLoggedIn = true },
-                onMicrosoft: { isUserLoggedIn = true }
+                onGoogle: {
+                    Task {
+                        if await AuthManager.shared.signInWithGoogle() {
+                            isUserLoggedIn = true
+                        }
+                    }
+                },
+                onApple: {
+                    AuthManager.shared.signInWithApple()
+                },
+                onMicrosoft: {
+                    Task {
+                        if await AuthManager.shared.signInWithMicrosoft() {
+                            isUserLoggedIn = true
+                        }
+                    }
+                }
             )
         }
         .frame(width: 350)

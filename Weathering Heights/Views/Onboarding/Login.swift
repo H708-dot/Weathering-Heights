@@ -47,17 +47,38 @@ struct Login: View {
             
             /// Login Button
             GradientButton(title: "Login", icon: "arrow.right") {
-                // TODO: Implement actual auth logic here
-                isUserLoggedIn = true
+                Task {
+                    if await AuthManager.shared.signIn(email: emailId, password: password) {
+                         isUserLoggedIn = true
+                    } else {
+                        // Handle error (e.g. show alert using AuthManager.shared.errorMessage)
+                    }
+                }
             }
             .hSpacing(.trailing)
             /// Disabling Until the Data is Entered
             .disableWithOpacity(emailId.isEmpty || password.isEmpty)
             
             SocialLoginRow(
-                onGoogle: { isUserLoggedIn = true },
-                onApple: { isUserLoggedIn = true },
-                onMicrosoft: { isUserLoggedIn = true }
+                onGoogle: {
+                    Task {
+                        if await AuthManager.shared.signInWithGoogle() {
+                            isUserLoggedIn = true
+                        }
+                    }
+                },
+                onApple: {
+                    AuthManager.shared.signInWithApple()
+                    // Apple logic is delegate based, tricky to await bool directly in this simple manager
+                    // For now, assume flow continues
+                },
+                onMicrosoft: {
+                    Task {
+                        if await AuthManager.shared.signInWithMicrosoft() {
+                            isUserLoggedIn = true
+                        }
+                    }
+                }
             )
         }
         .frame(width: 350) // Ensure entire form aligns to the field width
