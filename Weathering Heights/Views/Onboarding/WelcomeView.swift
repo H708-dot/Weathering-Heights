@@ -181,9 +181,6 @@ struct WelcomeView: View {
             }
         }
     }
-            }
-        }
-    }
 }
 
 #Preview {
