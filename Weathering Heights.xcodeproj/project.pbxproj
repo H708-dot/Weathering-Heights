@@ -65,6 +65,7 @@
 /* Begin PBXFileReference section */
 		3805A09F2C3BCC5100A56BBF /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		385EC3A22EF5B4DC0046E2D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		385EC3A42EF5B7600046E2D5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		38C070D72C37021700891AD2 /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		38D18B032EF0A091000B8691 /* OnboardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep.swift; sourceTree = "<group>"; };
 		38D18B072EF0A0F5000B8691 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 		5EC50A352C306620006C137C = {
 			isa = PBXGroup;
 			children = (
+				385EC3A42EF5B7600046E2D5 /* AuthManager.swift */,
 				5E2662742C3C704C00E9A389 /* Weathering-Heights-Info.plist */,
 				5EC50A402C306620006C137C /* Weathering Heights */,
 				5EC50A512C306621006C137C /* Weathering HeightsTests */,
