@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct HomeView: View {
-    @AppStorage("isUserLoggedIn") private var isUserLoggedIn: Bool = false
+    @ObservedObject private var authManager = AuthManager.shared
     
     var body: some View {
         ZStack {
@@ -21,20 +22,31 @@ struct HomeView: View {
                     .font(.custom("Rubik-Bold", size: 36))
                     .foregroundStyle(.white)
                 
+                if let user = authManager.currentUser {
+                    Text(user.displayName ?? user.email ?? "User")
+                        .font(.custom("Rubik-Medium", size: 20))
+                        .foregroundStyle(.white.opacity(0.9))
+                }
+                
                 Text("You are successfully logged in.")
                     .font(.custom("Rubik-Regular", size: 18))
                     .foregroundStyle(.white.opacity(0.8))
                 
+                Spacer().frame(height: 20)
+                
                 Button(action: {
-                    // Logout Action
-                    isUserLoggedIn = false
+                    authManager.signOut()
                 }, label: {
-                    Text("Logout")
-                        .font(.custom("Rubik-Bold", size: 16))
-                        .foregroundStyle(.white)
-                        .padding()
-                        .background(Color.red.opacity(0.8))
-                        .cornerRadius(12)
+                    HStack {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                        Text("Logout")
+                    }
+                    .font(.custom("Rubik-Bold", size: 16))
+                    .foregroundStyle(.white)
+                    .padding()
+                    .frame(width: 200)
+                    .background(Color.red.opacity(0.8))
+                    .cornerRadius(12)
                 })
             }
         }
