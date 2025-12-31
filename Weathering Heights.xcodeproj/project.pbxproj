@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3805A0A02C3BCC5100A56BBF /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3805A09F2C3BCC5100A56BBF /* Profile.swift */; };
 		385EC3A32EF5B4DD0046E2D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 385EC3A22EF5B4DC0046E2D5 /* GoogleService-Info.plist */; };
+		385EC3A52EF5B7700046E2D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 385EC3A62EF5B7700046E2D5 /* FirebaseAuth */; };
+		385EC3A72EF5B7700046E2D5 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 385EC3A82EF5B7700046E2D5 /* FirebaseCore */; };
+		3898EFC12F05994C00B56662 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 3898EFC02F05994C00B56662 /* GoogleSignIn */; };
+		3898EFC32F05994C00B56662 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3898EFC22F05994C00B56662 /* GoogleSignInSwift */; };
 		38C070D82C37021700891AD2 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C070D72C37021700891AD2 /* ForgotPassword.swift */; };
 		38D18B042EF0A091000B8691 /* OnboardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D18B032EF0A091000B8691 /* OnboardingStep.swift */; };
 		38D18B082EF0A0F5000B8691 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D18B072EF0A0F5000B8691 /* HomeView.swift */; };
@@ -111,6 +115,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385EC3A52EF5B7700046E2D5 /* FirebaseAuth in Frameworks */,
+				385EC3A72EF5B7700046E2D5 /* FirebaseCore in Frameworks */,
+				3898EFC12F05994C00B56662 /* GoogleSignIn in Frameworks */,
+				3898EFC32F05994C00B56662 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +290,12 @@
 			dependencies = (
 			);
 			name = "Weathering Heights";
+			packageProductDependencies = (
+				385EC3A62EF5B7700046E2D5 /* FirebaseAuth */,
+				385EC3A82EF5B7700046E2D5 /* FirebaseCore */,
+				3898EFC02F05994C00B56662 /* GoogleSignIn */,
+				3898EFC22F05994C00B56662 /* GoogleSignInSwift */,
+			);
 			productName = "Weathering Heights";
 			productReference = 5EC50A3E2C306620006C137C /* Weathering Heights.app */;
 			productType = "com.apple.product-type.application";
@@ -330,7 +344,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					5EC50A3D2C306620006C137C = {
 						CreatedOnToolsVersion = 15.4;
@@ -356,6 +370,7 @@
 			mainGroup = 5EC50A352C306620006C137C;
 			packageReferences = (
 				385EC3A12EF5AF7B0046E2D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3898EFBF2F05994C00B56662 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 5EC50A3F2C306620006C137C /* Products */;
 			projectDirPath = "";
@@ -524,6 +539,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -580,6 +596,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -761,7 +778,38 @@
 				minimumVersion = 12.7.0;
 			};
 		};
+		3898EFBF2F05994C00B56662 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		385EC3A62EF5B7700046E2D5 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 385EC3A12EF5AF7B0046E2D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		385EC3A82EF5B7700046E2D5 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 385EC3A12EF5AF7B0046E2D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		3898EFC02F05994C00B56662 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3898EFBF2F05994C00B56662 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		3898EFC22F05994C00B56662 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3898EFBF2F05994C00B56662 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5EC50A362C306620006C137C /* Project object */;
 }
