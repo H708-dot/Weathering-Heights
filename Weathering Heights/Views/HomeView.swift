@@ -6,50 +6,48 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct HomeView: View {
-    @ObservedObject private var authManager = AuthManager.shared
+    @State private var selectedTab = 0
+    
+    // Custom Tab Bar Appearance
+    init() {
+        // Make the tab bar background visible and styled
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemBackground
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
     
     var body: some View {
-        ZStack {
-            Image("Background")
-                .resizable()
-                .ignoresSafeArea()
-            
-            VStack(spacing: 20) {
-                Text("Welcome Back!")
-                    .font(.custom("Rubik-Bold", size: 36))
-                    .foregroundStyle(.white)
-                
-                if let user = authManager.currentUser {
-                    Text(user.displayName ?? user.email ?? "User")
-                        .font(.custom("Rubik-Medium", size: 20))
-                        .foregroundStyle(.white.opacity(0.9))
+        TabView(selection: $selectedTab) {
+            WeatherView()
+                .tabItem {
+                    Label("Weather", systemImage: "cloud.sun.fill")
                 }
-                
-                Text("You are successfully logged in.")
-                    .font(.custom("Rubik-Regular", size: 18))
-                    .foregroundStyle(.white.opacity(0.8))
-                
-                Spacer().frame(height: 20)
-                
-                Button(action: {
-                    authManager.signOut()
-                }, label: {
-                    HStack {
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                        Text("Logout")
-                    }
-                    .font(.custom("Rubik-Bold", size: 16))
-                    .foregroundStyle(.white)
-                    .padding()
-                    .frame(width: 200)
-                    .background(Color.red.opacity(0.8))
-                    .cornerRadius(12)
-                })
-            }
+                .tag(0)
+            
+            MapView()
+                .tabItem {
+                    Label("Map", systemImage: "map.fill")
+                }
+                .tag(1)
+            
+            QuizView()
+                .tabItem {
+                    Label("Quiz", systemImage: "gamecontroller.fill")
+                }
+                .tag(2)
+            
+            CommunityView()
+                .tabItem {
+                    Label("Community", systemImage: "person.3.fill")
+                }
+                .tag(3)
         }
+        .tint(.blue) // Active tab color
     }
 }
 
