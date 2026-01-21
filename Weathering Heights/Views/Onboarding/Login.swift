@@ -22,11 +22,11 @@ struct Login: View {
         VStack(spacing: 25) {
             /// Custom Text Fields
             CustomTF(sfIcon: "at", hint: "Email Id", value: $emailId)
-                .autocapitalization(.none)
+                .textInputAutocapitalization(.never)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
-                .foregroundColor(emailIdIsValid ? .green : .red)
-                .onChange(of: emailId) { newValue, _ in
+                .foregroundStyle(emailIdIsValid ? .green : .red)
+                .onChange(of: emailId) { _, newValue in
                     if newValue.range(of: "^\\w+([-+.']\\w+)*@\\w+([-.](\\w+))*\\.\\w+([-.]\\w+)*$", options: .regularExpression) != nil {
                         self.emailIdIsValid = true
                     } else {

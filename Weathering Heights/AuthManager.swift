@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Firebase
+// import Firebase - Deprecated in Firebase 12
 import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
@@ -130,7 +130,7 @@ class AuthManager: NSObject, ObservableObject {
         }
         
         let config = GIDConfiguration(clientID: clientID)
-        GIDSignIn.sharedInstance.configuration = config
+        // GIDSignIn.sharedInstance.configuration = config // Deprecated in GIDSignIn 7+
         
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let rootViewController = windowScene.windows.first?.rootViewController else {
@@ -141,7 +141,7 @@ class AuthManager: NSObject, ObservableObject {
         }
         
         do {
-            let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+            let result = try await GIDSignIn.sharedInstance.signIn(with: config, presenting: rootViewController)
             
             guard let idToken = result.user.idToken?.tokenString else {
                 errorMessage = "Failed to get Google ID token"
