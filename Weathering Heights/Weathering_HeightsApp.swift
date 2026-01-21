@@ -12,7 +12,6 @@ import GoogleSignIn
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
         return true
     }
     
@@ -27,7 +26,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct Weathering_HeightsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var authManager = AuthManager.shared
+    @StateObject private var authManager: AuthManager
+    
+    init() {
+        FirebaseApp.configure()
+        _authManager = StateObject(wrappedValue: AuthManager.shared)
+    }
     
     var body: some Scene {
         WindowGroup {
